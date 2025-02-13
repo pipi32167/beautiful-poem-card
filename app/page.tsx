@@ -20,12 +20,16 @@ export default function Page() {
     const [theme, setTheme] = useState('');
     const svgRef = useRef(null);
 
-    const getTextSize = (text: string) => {
-        const lines = text.split('\n').length;
-        if (lines <= 4) return 'text-2xl';
-        if (lines <= 8) return 'text-xl';
-        if (lines <= 12) return 'text-lg';
-        return 'text-base';
+    const getTextSize = (lines: number) => {
+        if (lines <= 4) return 28;
+        if (lines <= 8) return 24;
+        if (lines <= 12) return 20;
+        return 18;
+    };
+
+    const splitPoem = (poem: string) => {
+        // 保留空行，但在渲染时将空行转换为空格
+        return poem.split('\n').map((line) => line.trim());
     };
 
     const handleImageUpload = (e) => {
@@ -84,16 +88,25 @@ export default function Page() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100 p-8">
-            <style>{styles}</style>
-            <div className="max-w-4xl mx-auto space-y-8">
-                <h1 className="text-4xl font-bold text-center text-purple-800 mb-8">
+        <div
+            className="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100 p-8"
+            data-oid="umnh3lq"
+        >
+            <style data-oid="6.uuddf">{styles}</style>
+            <div className="max-w-4xl mx-auto space-y-8" data-oid="_31m7od">
+                <h1
+                    className="text-4xl font-bold text-center text-purple-800 mb-8"
+                    data-oid="3w56ga9"
+                >
                     诗歌卡片生成器
                 </h1>
 
-                <div className="bg-white rounded-xl shadow-xl p-8 space-y-6">
-                    <div className="space-y-4">
-                        <label className="block text-lg font-medium text-gray-700">
+                <div className="bg-white rounded-xl shadow-xl p-8 space-y-6" data-oid="5e8mbdz">
+                    <div className="space-y-4" data-oid="hzoxz47">
+                        <label
+                            className="block text-lg font-medium text-gray-700"
+                            data-oid="0k2z-gz"
+                        >
                             上传图片
                             <input
                                 type="file"
@@ -105,6 +118,7 @@ export default function Page() {
                                     file:text-sm file:font-semibold
                                     file:bg-purple-50 file:text-purple-700
                                     hover:file:bg-purple-100"
+                                data-oid="hjg85jc"
                             />
                         </label>
                         {/* 
@@ -125,7 +139,10 @@ export default function Page() {
               />
               </label> */}
 
-                        <label className="block text-lg font-medium text-gray-700">
+                        <label
+                            className="block text-lg font-medium text-gray-700"
+                            data-oid="h5ftz4d"
+                        >
                             诗歌内容
                             <textarea
                                 value={poem}
@@ -134,23 +151,25 @@ export default function Page() {
                                     focus:border-purple-500 focus:ring-purple-500
                                     p-2 border h-32"
                                 placeholder="输入诗歌内容..."
+                                data-oid="qolncq2"
                             />
                         </label>
                     </div>
 
-                    <div className="flex justify-center">
+                    <div className="flex justify-center" data-oid="af51j6c">
                         <button
                             onClick={exportToPNG}
                             className="px-6 py-3 bg-purple-600 text-white rounded-full
                                 hover:bg-purple-700 transition-colors duration-200
                                 font-semibold shadow-lg hover:shadow-xl"
+                            data-oid="xqn27lj"
                         >
                             导出为PNG
                         </button>
                     </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-xl p-8">
+                <div className="bg-white rounded-xl shadow-xl p-8" data-oid="x4z6ccr">
                     <svg
                         ref={svgRef}
                         id="svgElementId"
@@ -160,36 +179,76 @@ export default function Page() {
                         viewBox="0 0 450 800"
                         style={{ width: '450px', height: '800px' }} // 添加固定尺寸
                         xmlns="http://www.w3.org/1999/xhtml" // 添加命名空间
+                        data-oid="gf:swny"
                     >
-                        <defs>
-                            <clipPath id="roundedRect">
-                                <rect x="0" y="0" width="450" height="800" rx="20" ry="20" />
+                        <defs data-oid="fv7o4p-">
+                            <clipPath id="roundedRect" data-oid="pb-c7p.">
+                                <rect
+                                    x="0"
+                                    y="0"
+                                    width="450"
+                                    height="800"
+                                    rx="20"
+                                    ry="20"
+                                    data-oid="s_10rhs"
+                                />
                             </clipPath>
                         </defs>
 
-                        <g clipPath="url(#roundedRect)">
+                        <g clipPath="url(#roundedRect)" data-oid="r7djpue">
                             {image && (
                                 <image
                                     href={image}
                                     width="450"
                                     height="800"
                                     preserveAspectRatio="xMidYMid slice"
+                                    data-oid="5-6j4og"
                                 />
                             )}
-                            <rect x="0" y="0" width="450" height="800" fill="rgba(0,0,0,0.4)" />
+                            <rect
+                                x="0"
+                                y="0"
+                                width="450"
+                                height="800"
+                                fill="rgba(0,0,0,0.4)"
+                                data-oid="gcxmrhp"
+                            />
 
-                            <foreignObject x="40" y="100" width="370" height="600">
-                                <div
-                                    xmlns="http://www.w3.org/1999/xhtml"
-                                    className="h-full flex flex-col justify-center"
+                            {poem && (
+                                <text
+                                    x="225"
+                                    y="400"
+                                    fill="white"
+                                    textAnchor="middle"
+                                    dominantBaseline="middle"
+                                    fontFamily="serif"
+                                    fontWeight="300"
+                                    letterSpacing="0.05em"
+                                    data-oid="242ax_a"
                                 >
-                                    <p
-                                        className={`text-white text-center whitespace-pre-line leading-relaxed ${getTextSize(poem)}`}
-                                    >
-                                        {poem}
-                                    </p>
-                                </div>
-                            </foreignObject>
+                                    {splitPoem(poem).map((line, index, array) => {
+                                        const lineCount = array.length;
+                                        const fontSize = getTextSize(lineCount);
+                                        const lineHeight = fontSize * 1.8; // 增加行高
+                                        const totalHeight = lineCount * lineHeight;
+                                        const startY = 400 - totalHeight / 2 + lineHeight / 2;
+
+                                        return (
+                                            <tspan
+                                                key={index}
+                                                x="225"
+                                                dy={index === 0 ? startY - 400 : lineHeight}
+                                                fontSize={fontSize}
+                                                opacity={line.trim() === '' ? 0 : 1} // 空行保持间距但不显示
+                                                data-oid="wfskzy."
+                                            >
+                                                {line.trim() === '' ? ' ' : line}
+                                                {/* 空行显示空格以保持间距 */}
+                                            </tspan>
+                                        );
+                                    })}
+                                </text>
+                            )}
                         </g>
                     </svg>
                 </div>
