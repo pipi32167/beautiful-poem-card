@@ -15,7 +15,7 @@ const styles = `
 `;
 
 export default function Page() {
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState<string | null>(null);
     const [poem, setPoem] = useState('');
     const [theme, setTheme] = useState('');
     const [showWatermark, setShowWatermark] = useState(false);
@@ -34,34 +34,20 @@ export default function Page() {
         return poem.split('\n').map((line) => line.trim());
     };
 
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0];
-        if (file) {
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            const file = files[0];
             const reader = new FileReader();
-            reader.onload = (e) => setImage(e.target.result);
+            reader.onload = (e: ProgressEvent<FileReader>) => {
+                const result = e.target?.result;
+                if (result && typeof result === 'string') {
+                    setImage(result);
+                }
+            };
             reader.readAsDataURL(file);
         }
     };
-
-    // const exportToPNG = async () => {
-    //     if (!svgRef.current) return;
-
-    //     const svgData = new XMLSerializer().serializeToString(svgRef.current);
-    //     const canvas = document.createElement('canvas');
-    //     const ctx = canvas.getContext('2d');
-
-    //     canvas.width = 450;
-    //     canvas.height = 800;
-
-    //     // Use Canvg to render SVG to Canvas
-    //     const v = await canvg.Canvg.fromString(ctx, svgData);
-    //     await v.render();
-
-    //     const a = document.createElement('a');
-    //     a.href = canvas.toDataURL('image/png');
-    //     a.download = 'poem-card.png';
-    //     a.click();
-    // };
 
     const exportToPNG = () => {
         const svgElement = document.getElementById('svgElementId');
