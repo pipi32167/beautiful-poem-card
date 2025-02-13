@@ -18,6 +18,8 @@ export default function Page() {
     const [image, setImage] = useState(null);
     const [poem, setPoem] = useState('');
     const [theme, setTheme] = useState('');
+    const [showWatermark, setShowWatermark] = useState(false);
+    const [watermarkText, setWatermarkText] = useState('');
     const svgRef = useRef(null);
 
     const getTextSize = (lines: number) => {
@@ -88,25 +90,16 @@ export default function Page() {
     };
 
     return (
-        <div
-            className="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100 p-8"
-            data-oid="umnh3lq"
-        >
-            <style data-oid="6.uuddf">{styles}</style>
-            <div className="max-w-4xl mx-auto space-y-8" data-oid="_31m7od">
-                <h1
-                    className="text-4xl font-bold text-center text-purple-800 mb-8"
-                    data-oid="3w56ga9"
-                >
+        <div className="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100 p-8">
+            <style>{styles}</style>
+            <div className="max-w-4xl mx-auto space-y-8">
+                <h1 className="text-4xl font-bold text-center text-purple-800 mb-8">
                     诗歌卡片生成器
                 </h1>
 
-                <div className="bg-white rounded-xl shadow-xl p-8 space-y-6" data-oid="5e8mbdz">
-                    <div className="space-y-4" data-oid="hzoxz47">
-                        <label
-                            className="block text-lg font-medium text-gray-700"
-                            data-oid="0k2z-gz"
-                        >
+                <div className="bg-white rounded-xl shadow-xl p-8 space-y-6">
+                    <div className="space-y-4">
+                        <label className="block text-lg font-medium text-gray-700">
                             上传图片
                             <input
                                 type="file"
@@ -118,7 +111,6 @@ export default function Page() {
                                     file:text-sm file:font-semibold
                                     file:bg-purple-50 file:text-purple-700
                                     hover:file:bg-purple-100"
-                                data-oid="hjg85jc"
                             />
                         </label>
                         {/* 
@@ -139,10 +131,7 @@ export default function Page() {
               />
               </label> */}
 
-                        <label
-                            className="block text-lg font-medium text-gray-700"
-                            data-oid="h5ftz4d"
-                        >
+                        <label className="block text-lg font-medium text-gray-700">
                             诗歌内容
                             <textarea
                                 value={poem}
@@ -151,25 +140,54 @@ export default function Page() {
                                     focus:border-purple-500 focus:ring-purple-500
                                     p-2 border h-32"
                                 placeholder="输入诗歌内容..."
-                                data-oid="qolncq2"
                             />
                         </label>
+
+                        <div className="space-y-2">
+                            <div className="flex items-center">
+                                <input
+                                    type="checkbox"
+                                    id="watermark"
+                                    checked={showWatermark}
+                                    onChange={(e) => setShowWatermark(e.target.checked)}
+                                    className="rounded border-gray-300 text-purple-600 
+                                        focus:ring-purple-500 h-4 w-4"
+                                />
+                                <label
+                                    htmlFor="watermark"
+                                    className="ml-2 text-lg font-medium text-gray-700"
+                                >
+                                    添加水印
+                                </label>
+                            </div>
+
+                            {showWatermark && (
+                                <input
+                                    type="text"
+                                    value={watermarkText}
+                                    onChange={(e) => setWatermarkText(e.target.value)}
+                                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm
+                                        focus:border-purple-500 focus:ring-purple-500
+                                        p-2 border"
+                                    placeholder="输入水印文字..."
+                                />
+                            )}
+                        </div>
                     </div>
 
-                    <div className="flex justify-center" data-oid="af51j6c">
+                    <div className="flex justify-center">
                         <button
                             onClick={exportToPNG}
                             className="px-6 py-3 bg-purple-600 text-white rounded-full
                                 hover:bg-purple-700 transition-colors duration-200
                                 font-semibold shadow-lg hover:shadow-xl"
-                            data-oid="xqn27lj"
                         >
                             导出为PNG
                         </button>
                     </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-xl p-8" data-oid="x4z6ccr">
+                <div className="bg-white rounded-xl shadow-xl p-8">
                     <svg
                         ref={svgRef}
                         id="svgElementId"
@@ -179,40 +197,23 @@ export default function Page() {
                         viewBox="0 0 450 800"
                         style={{ width: '450px', height: '800px' }} // 添加固定尺寸
                         xmlns="http://www.w3.org/1999/xhtml" // 添加命名空间
-                        data-oid="gf:swny"
                     >
-                        <defs data-oid="fv7o4p-">
-                            <clipPath id="roundedRect" data-oid="pb-c7p.">
-                                <rect
-                                    x="0"
-                                    y="0"
-                                    width="450"
-                                    height="800"
-                                    rx="20"
-                                    ry="20"
-                                    data-oid="s_10rhs"
-                                />
+                        <defs>
+                            <clipPath id="roundedRect">
+                                <rect x="0" y="0" width="450" height="800" rx="20" ry="20" />
                             </clipPath>
                         </defs>
 
-                        <g clipPath="url(#roundedRect)" data-oid="r7djpue">
+                        <g clipPath="url(#roundedRect)">
                             {image && (
                                 <image
                                     href={image}
                                     width="450"
                                     height="800"
                                     preserveAspectRatio="xMidYMid slice"
-                                    data-oid="5-6j4og"
                                 />
                             )}
-                            <rect
-                                x="0"
-                                y="0"
-                                width="450"
-                                height="800"
-                                fill="rgba(0,0,0,0.4)"
-                                data-oid="gcxmrhp"
-                            />
+                            <rect x="0" y="0" width="450" height="800" fill="rgba(0,0,0,0.4)" />
 
                             {poem && (
                                 <text
@@ -224,7 +225,6 @@ export default function Page() {
                                     fontFamily="serif"
                                     fontWeight="300"
                                     letterSpacing="0.05em"
-                                    data-oid="242ax_a"
                                 >
                                     {splitPoem(poem).map((line, index, array) => {
                                         const lineCount = array.length;
@@ -240,13 +240,26 @@ export default function Page() {
                                                 dy={index === 0 ? startY - 400 : lineHeight}
                                                 fontSize={fontSize}
                                                 opacity={line.trim() === '' ? 0 : 1} // 空行保持间距但不显示
-                                                data-oid="wfskzy."
                                             >
                                                 {line.trim() === '' ? ' ' : line}
                                                 {/* 空行显示空格以保持间距 */}
                                             </tspan>
                                         );
                                     })}
+                                </text>
+                            )}
+
+                            {/* 水印 */}
+                            {showWatermark && watermarkText && (
+                                <text
+                                    x="420"
+                                    y="770"
+                                    fill="rgba(255,255,255,0.6)"
+                                    textAnchor="end"
+                                    fontSize="14"
+                                    fontFamily="sans-serif"
+                                >
+                                    {watermarkText}
                                 </text>
                             )}
                         </g>
